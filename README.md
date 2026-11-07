@@ -12,6 +12,7 @@ Cute, colourful **Primary 4 English spelling game** for Hong Kong kids — mobil
 - Illustrations from **Wikimedia Commons / Openverse** (CC-friendly), shown via same-origin `/api/img` proxy
 - **Shareable PNG result card** (Web Share API + download / clipboard fallback), spoiler-free like bird/fish
 - Progress saved in `localStorage` for the same day
+- **Edge TTS** — word + example audio pre-generated with Microsoft `edge-tts` (`en-GB-SoniaNeural`), shipped as static MP3s under `/audio/w/` and `/audio/e/` (no Cloudflare Workers AI at runtime)
 
 ## Vocabulary source (EDB honesty)
 
@@ -30,6 +31,8 @@ References:
 npm install
 python3 scripts/build_words.py      # rebuild src/words-data.json
 python3 scripts/enrich_images.py    # Wikimedia / Openverse images
+python3 -m venv .venv && .venv/bin/pip install edge-tts
+.venv/bin/python scripts/generate_static_tts.py
 npm run dev
 ```
 
@@ -50,14 +53,10 @@ Vite + vanilla JS, `wrangler.jsonc` SPA + `run_worker_first: ["/api/*"]`, Worker
 
 Daily seed key: `p4english-daily-YYYY-MM-DD`.
 
-## TTS cache
+## TTS (static Edge MP3s)
 
-`/api/speak` serves pre-generated MP3s from the `TTS_CACHE` KV namespace (key =
-`sha256(v1|aura-2-en|speaker|text)`). Prefill with:
+Word and example audio are pre-generated with Microsoft `edge-tts` (`en-GB-SoniaNeural`) into `public/audio/w/` and `public/audio/e/`, then shipped with the Vite build. `/api/speak` returns **410 Gone** — runtime does not use Workers AI or `TTS_CACHE` KV.
 
 ```bash
-.venv/bin/pip install edge-tts
-.venv/bin/python scripts/backfill_tts.py --speakers asteria
+.venv/bin/python scripts/generate_static_tts.py
 ```
-
-On a cache miss the Worker falls back to Workers AI Aura-2 and stores the result.
