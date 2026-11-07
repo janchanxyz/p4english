@@ -15,6 +15,10 @@
     {
       "binding": "REPORTS",
       "id": "05aca8f2017946c19cc94c2149eddb2d"
+    },
+    {
+      "binding": "TTS_CACHE",
+      "id": "7b0a4c8730d348f3841a8538db2d6421"
     }
   ]
 }

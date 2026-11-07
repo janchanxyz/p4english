@@ -49,3 +49,15 @@ npx wrangler deploy
 Vite + vanilla JS, `wrangler.jsonc` SPA + `run_worker_first: ["/api/*"]`, Worker image proxy for canvas CORS.
 
 Daily seed key: `p4english-daily-YYYY-MM-DD`.
+
+## TTS cache
+
+`/api/speak` serves pre-generated MP3s from the `TTS_CACHE` KV namespace (key =
+`sha256(v1|aura-2-en|speaker|text)`). Prefill with:
+
+```bash
+.venv/bin/pip install edge-tts
+.venv/bin/python scripts/backfill_tts.py --speakers asteria
+```
+
+On a cache miss the Worker falls back to Workers AI Aura-2 and stores the result.
