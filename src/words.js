@@ -67,7 +67,7 @@ function collectRawUrls(entry) {
 /** Prefer entries with images for daily pool. */
 export function imageablePool() {
   const withImg = WORDS.filter((w) => w?.imageUrl || (Array.isArray(w?.imageUrls) && w.imageUrls.length));
-  return withImg.length >= 15 ? withImg : WORDS;
+  return withImg.length >= 10 ? withImg : WORDS;
 }
 
 /**

@@ -1,10 +1,10 @@
 /**
- * Daily spelling challenge — deterministic 15 words for Asia/Hong_Kong calendar day.
+ * Daily spelling challenge — deterministic 10 words for Asia/Hong_Kong calendar day.
  * Seed: p4english-daily-YYYY-MM-DD via xmur3 + mulberry32.
  */
 import { WORDS, imageablePool } from './words.js';
 
-export const DAILY_ROUNDS = 15;
+export const DAILY_ROUNDS = 10;
 export const DAILY_TZ = 'Asia/Hong_Kong';
 export const SHARE_SITE = 'https://p4english.chanplanet.workers.dev';
 export const MIN_BLANKS = 2;
@@ -66,7 +66,7 @@ export function dailySeed(dateStr) {
   return `p4english-daily-${d}`;
 }
 
-/** Pick the same 15 words for everyone on this HK date. Prefer imageable. */
+/** Pick the same 10 words for everyone on this HK date. Prefer imageable. */
 export function pickDailyWords(dateStr) {
   const d = isValidDateStr(dateStr) ? dateStr : hkDateString();
   const rng = seededRng(dailySeed(d));
@@ -121,7 +121,7 @@ export function readProgress(dateStr) {
       index: Math.max(0, Math.min(DAILY_ROUNDS, Number(obj.index) || 0)),
       answers: Array.isArray(obj.answers) ? obj.answers.map((x) => String(x || '')) : [],
       results: Array.isArray(obj.results) ? obj.results.map((x) => (x ? 1 : 0)) : [],
-      hearts: Math.max(0, Math.min(9, Number(obj.hearts ?? 9))),
+      hearts: Math.max(0, Math.min(8, Number(obj.hearts ?? 8))),
       gameOver: Boolean(obj.gameOver),
       startedAt: Number(obj.startedAt) || Date.now(),
     };
@@ -138,7 +138,7 @@ export function saveProgress(dateStr, payload) {
         index: payload.index,
         answers: payload.answers || [],
         results: (payload.results || []).map((x) => (x ? 1 : 0)),
-        hearts: Math.max(0, Math.min(9, Number(payload.hearts ?? 9))),
+        hearts: Math.max(0, Math.min(8, Number(payload.hearts ?? 8))),
         gameOver: Boolean(payload.gameOver),
         startedAt: payload.startedAt || Date.now(),
         at: Date.now(),

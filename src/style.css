@@ -583,7 +583,44 @@ body {
 }
 
 .feedback.bad {
-  color: #b91c1c;
+  color: #c2410c;
+  font-size: 1rem;
+}
+
+.answer-reveal {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: clamp(1.85rem, 8vw, 2.45rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  background: linear-gradient(
+    115deg,
+    #ff6bab 0%,
+    #ff9a5a 22%,
+    #ffd166 45%,
+    #5eead4 68%,
+    #5aa9ff 85%,
+    #a78bfa 100%
+  );
+  background-size: 160% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(255, 255, 255, 0.85))
+    drop-shadow(0 3px 8px rgba(255, 107, 171, 0.28));
+  animation: answerShine 4.5s ease-in-out infinite;
+}
+
+@keyframes answerShine {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .kbd {

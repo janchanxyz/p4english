@@ -31,7 +31,7 @@ import { celebrateCorrect } from './celebrate.js';
 const main = document.getElementById('main');
 const datePill = document.getElementById('datePill');
 
-const MAX_HEARTS = 9;
+const MAX_HEARTS = 8;
 
 const state = {
   dateStr: hkDateString(),
@@ -636,7 +636,7 @@ function renderPlay() {
   const feedback = state.revealed
     ? assembledAnswer(puzzle) === puzzle.word
       ? `<p class="feedback ok">${t('correct')}</p>`
-      : `<p class="feedback bad">${t('wrong')}<br/><strong>${titleWord(puzzle.word)}</strong></p>`
+      : `<p class="feedback bad">${t('wrong')}<br/><span class="answer-reveal">${titleWord(puzzle.word)}</span></p>`
     : `<p class="feedback"></p>`;
 
   const outOfHearts = state.revealed && state.hearts <= 0;
