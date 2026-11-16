@@ -7,7 +7,7 @@ Cute, colourful **Primary 4 English spelling game** for Hong Kong kids — mobil
 ## Features
 
 - **每日 10 個字** — same words for everyone on the same Hong Kong calendar day (`Asia/Hong_Kong`)
-- Each word hides **2–5 letters**; fill the blanks with an on-screen keyboard
+- Each word hides **6–10 letters** (shorter words hide all but one letter); fill the blanks with an on-screen keyboard
 - **繁體中文（香港）** gloss for every item
 - Illustrations from **Wikimedia Commons / Openverse** (CC-friendly), shown via same-origin `/api/img` proxy
 - **Shareable PNG result card** (Web Share API + download / clipboard fallback), spoiler-free like bird/fish
