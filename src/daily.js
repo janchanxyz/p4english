@@ -7,8 +7,8 @@ import { WORDS, imageablePool } from './words.js';
 export const DAILY_ROUNDS = 10;
 export const DAILY_TZ = 'Asia/Hong_Kong';
 export const SHARE_SITE = 'https://p4english.chanplanet.workers.dev';
-export const MIN_BLANKS = 2;
-export const MAX_BLANKS = 5;
+export const MIN_BLANKS = 6;
+export const MAX_BLANKS = 10;
 
 /** YYYY-MM-DD in Hong Kong time */
 export function hkDateString(date = new Date()) {
@@ -77,17 +77,20 @@ export function pickDailyWords(dateStr) {
 }
 
 /**
- * Choose 2–5 blank letter indices for a word (deterministic per day+index).
+ * Choose 6–10 blank letter indices for a word (deterministic per day+index).
  * Always leave at least one letter visible when length allows.
+ * Shorter words fall back to n-1 blanks (cannot reach the 6–10 range).
  */
 export function pickBlankIndices(word, dateStr, roundIndex) {
   const w = String(word || '').toLowerCase();
   const n = w.length;
   if (n < 2) return [];
   const rng = seededRng(`${dailySeed(dateStr)}-blanks-${roundIndex}-${w}`);
+  const maxPossible = Math.max(1, n - 1);
   let blankCount = MIN_BLANKS + Math.floor(rng() * (MAX_BLANKS - MIN_BLANKS + 1));
-  blankCount = Math.max(MIN_BLANKS, Math.min(MAX_BLANKS, blankCount, n - 1, n));
-  if (n <= 4) blankCount = Math.min(blankCount, Math.max(2, n - 1));
+  blankCount = Math.min(MAX_BLANKS, blankCount, maxPossible);
+  if (maxPossible >= MIN_BLANKS) blankCount = Math.max(MIN_BLANKS, blankCount);
+  else blankCount = maxPossible;
   const indices = Array.from({ length: n }, (_, i) => i);
   const shuffled = seededShuffle(indices, rng);
   return shuffled.slice(0, blankCount).sort((a, b) => a - b);
